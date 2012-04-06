@@ -2,6 +2,6 @@
   "name": "node-example",
   "version": "0.0.1",
   "dependencies": {
-    "xml2js": "> 0"
+    "xml2js": "0.1.13"
   }
 }
