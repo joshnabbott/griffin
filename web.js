@@ -8,19 +8,31 @@ var botId = 'ff62f374fe343f73';
 var server = http.createServer(function(req, res) {
   req.startTime = new Date();
   console.log('--> [' + req.method + '] "' + req.url + '" at ' + req.startTime);
-  if (req.method == 'GET' && req.url == '/') {
+  if (req.method === 'OPTIONS') {
+    options(req, res);
+  } else if (req.method === 'GET' && req.url === '/') {
     root.get(req, res);
-  } else if (req.method == 'POST' && req.url == '/') {
+  } else if (req.method === 'POST' && req.url === '/') {
     root.post(req, res);
   }
 });
+
+function options(req, res) {
+  res.writeHead(200, {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers':  'content-type, accept',
+  });
+  res.end();
+  console.log('--> 200 OK in ' + ((new Date() - req.startTime) / 1000) + ' seconds');
+}
 
 var root = {}
 
 root.get = function root(req, res) {
   res.writeHead(200);
   res.end("Hi.");
-  console.log('--> 200 OK in ' + ((new Date() - req.startTime) / 1000) + ' seconds');
+  console.log('  --> 200 OK in ' + ((new Date() - req.startTime) / 1000) + ' seconds');
 }
 
 root.post = function post(req, res) {
@@ -51,7 +63,7 @@ root.post = function post(req, res) {
       postRes.on('end', function() {
         parser.parseString(body, function(err, json) {
           if (err || !json) {
-            console.log('--> Error parsing response.');
+            console.log('  --> Error parsing response.');
             return false;
           }
           var responseJSON= {
@@ -61,9 +73,12 @@ root.post = function post(req, res) {
             response: json.that
           }
           var response = JSON.stringify(responseJSON);
-          res.writeHead(200, { 'Content-Length': response.length });
+          res.writeHead(200, {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Length': response.length
+          });
           res.end(response);
-          console.log('--> 200 OK in ' + ((new Date() - req.startTime) / 1000) + ' seconds');
+          console.log('  --> 200 OK in ' + ((new Date() - req.startTime) / 1000) + ' seconds');
         });
       })
     });
