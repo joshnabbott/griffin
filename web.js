@@ -36,7 +36,7 @@ root.get = function(req, res) {
 }
 
 root.post = function(req, res) {
-  var query = 'botid=' + botId;
+  var query = '';
   var body = '';
 
   // Handle incoming data
@@ -45,6 +45,8 @@ root.post = function(req, res) {
   });
 
   req.on('end', function() {
+    if (!/botid=/.test(query)) query += '&botid=' + botId;
+
     var options = {
       host: 'www.pandorabots.com',
       port: 80,
