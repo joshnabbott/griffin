@@ -68,11 +68,12 @@ root.post = function(req, res) {
             console.log('  --> Error parsing response.');
             return false;
           }
-          var responseJSON= {
+          var responseJSON = {
             customer_id: json['@'].custid,
             bot_id: json['@'].botid,
             status: json['@'].status,
-            response: json.that
+            response: json.that,
+            error: json.message
           }
           var response = JSON.stringify(responseJSON);
           res.writeHead(200, {
