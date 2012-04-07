@@ -30,7 +30,9 @@ function options(req, res) {
 var root = {}
 
 root.get = function(req, res) {
-  res.writeHead(200);
+  res.writeHead(200, {
+    'Content-Length': 3
+  });
   res.end("Hi.");
   console.log('  --> 200 OK in ' + ((new Date() - req.startTime) / 1000) + ' seconds');
 }
