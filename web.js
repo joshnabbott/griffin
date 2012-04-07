@@ -36,8 +36,7 @@ root.get = function(req, res) {
 }
 
 root.post = function(req, res) {
-  var query = '';
-  var body = '';
+  var query, body = '';
 
   // Handle incoming data
   req.on('data', function(chunk) {
