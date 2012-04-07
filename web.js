@@ -44,8 +44,6 @@ root.post = function(req, res) {
   });
 
   req.on('end', function() {
-    if (!/botid=/.test(query)) query += '&botid=' + botId;
-
     var options = {
       host: 'www.pandorabots.com',
       port: 80,
@@ -84,6 +82,10 @@ root.post = function(req, res) {
         });
       })
     });
+
+
+    // Set botid if it's not there.
+    if (!/botid=/.test(query)) query += '&botid=' + botId;
 
     post.write(query);
     post.end();
