@@ -29,13 +29,13 @@ function options(req, res) {
 
 var root = {}
 
-root.get = function root(req, res) {
+root.get = function(req, res) {
   res.writeHead(200);
   res.end("Hi.");
   console.log('  --> 200 OK in ' + ((new Date() - req.startTime) / 1000) + ' seconds');
 }
 
-root.post = function post(req, res) {
+root.post = function(req, res) {
   var query = 'botid=' + botId;
   var body = '';
 
